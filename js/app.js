@@ -37,11 +37,40 @@ function eliminarCurso(e) {
     const cursoId = e.target.getAttribute("data-id");
 
     //Elimina del arreglo de articulosCarrito por el data-id
-    articulosCarrito = articulosCarrito.filter((curso) => curso.id !== cursoId);
+    articulosCarrito = articulosCarrito.filter((curso) => {
+      if (curso.id === cursoId) {
+        if (curso.cantidad > 1) {
+          curso.cantidad--;
+          return curso;
+        } else {
+          delete curso;
+        }
+      } else {
+        return curso;
+      }
+    });
 
     carritoHTML(); //Iterar sobre el carrito y mostrar el HTML
   }
 }
+
+// Elimina curso de carrito
+// function eliminarCurso(e) {
+//   e.preventDefault();
+//   if (e.target.classList.contains("borrar-curso")) {
+//     const cursoId = e.target.getAttribute("data-id");
+//     // Resta del carrito el curso seleccionado por cantidad
+//     idx = articulosCarrito.findIndex((curso) => curso.id === cursoId);
+//     articulosCarrito[idx].cantidad--;
+//     //Elimina del arreglo por el id cuando la cantidad llegue a 0
+//     if (!articulosCarrito[idx].cantidad) {
+//       articulosCarrito = articulosCarrito.filter(
+//         (curso) => curso.id !== cursoId
+//       );
+//     }
+//     carritoHTML();
+//   }
+// }
 
 //Lee el contenido del HTML al que le dimos Click y extrae la información del curso
 function leerDatosCurso(curso) {
